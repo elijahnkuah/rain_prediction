@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        table, th, td {
+          border:2px solid black;
+        }
+        body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: rgb(247, 244, 244);
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
+
+.topnav a {
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: hsl(253, 92%, 19%);
+  color: rgb(255, 255, 255);
+}
+.main {
+  padding: 16px;
+  margin-top: 30px;
+}
+        </style>
+<head>
+    <title>Australia Meteorological Agency</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-3">
+        <form action="{{ url_for('predict_whether')}}" method="POST">
+            <div class="row">
+                    <div class="topnav">
+                    <a class="active"  href="/">Australia Meteorological Agency</a>
+                    </div>
+            <div class="main">
+                <div class="row">
+                <h4></h4>
+                <br>
+                <br>
+                <h2>AUSTRALIA METEOROLOGICAL AUTHORITY AI WHETHER PREDICTION</h2>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="Date"><b>Date</b></label>
+                        <input type="Date" class="form-control" id="Date"
+                            placeholder="Eg. 2023-01-20" name="Date" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="Location"><b>Location Name</b></label>
+                        <select class="form-select" id="Location" name="Location" required>
+                            <option value="">--Select Location--</option>
+                            <option value="Adelaide">Adelaide</option>
+                            <option value="Albany">Albany</option>
+                            <option value="Albury">Albury</option>
+                            <option value="BadgerysCreek">BadgerysCreek</option>
+                            <option value="Ballarat">Ballarat</option>
+                            <option value="Bendigo">Bendigo</option>
+                            <option value="Brisbane">Brisbane</option>
+                            <option value="Cairns">Cairns</option>
+                            <option value="Canberra">Canberra</option>
+                            <option value="Cobar">Cobar</option>
+                            <option value="CoffsHarbour">CoffsHarbour</option>
+                            <option value="Dartmoor">Dartmoor</option>
+                            <option value="Darwin">Darwin</option>
+                            <option value="Hobart">Hobart</option>
+                            <option value="Katherine">Katherine</option>
+                            <option value="Launceston">Launceston</option>
+                            <option value="Melbourne">Melbourne</option>
+                            <option value="MelbourneAirport">MelbourneAirport</option>
+                            <option value="Mildura">Mildura</option>
+                            <option value="Moree">Moree</option>
+                            <option value="MountGambier">MountGambier</option>
+                            <option value="MountGinini">MountGinini</option>
+                            <option value="Newcastle">Newcastle</option>
+                            <option value="Nhil">Nhil</option>
+                            <option value="NorahHead">NorahHead</option>
+                            <option value="NorfolkIsland">NorfolkIsland</option>
+                            <option value="Nuriootpa">Nuriootpa</option>
+                            <option value="PearceRAAF">PearceRAAF</option>
+                            <option value="Penrith">Penrith</option>
+                            <option value="Perth">Perth</option>
+                            <option value="PerthAirport">PerthAirport</option>
+                            <option value="Portland">Portland</option>
+                            <option value="Richmond">Richmond</option>
+                            <option value="Sale">Sale</option>
+                            <option value="SalmonGums">SalmonGums</option>
+                            <option value="Sydney">Sydney</option>
+                            <option value="SydneyAirport">SydneyAirport</option>
+                            <option value="Townsville">Townsville</option>
+                            <option value="Tuggeranong">Tuggeranong</option>
+                            <option value="Uluru">Uluru</option>
+                            <option value="WaggaWagga">WaggaWagga</option>
+                            <option value="Walpole">Walpole</option>
+                            <option value="Watsonia">Watsonia</option>
+                            <option value="Williamtown">Williamtown</option>
+                            <option value="Witchcliffe">Witchcliffe</option>
+                            <option value="Wollongong">Wollongong</option>
+                            <option value="Woomera">Woomera</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="MinTemp"><b>Minimum Temperature</b></label>
+                        <input type="number" class="form-control" id="MinTemp"
+                            placeholder="Eg: -5.6" name="MinTemp" step="any" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="MaxTemp"><b>Maximum Temperature</b></label>
+                        <input type="number" class="form-control" id="MaxTemp"
+                            placeholder="Eg: 15.8" name="MaxTemp" step="any" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="Rainfall"><b>Rainfall</b></label>
+                        <input type="number" class="form-control" id="Rainfall"
+                            placeholder="Eg: 0.8" name="Rainfall" step="any" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="Evaporation"><b>Evaporation</b></label>
+                        <input type="number" class="form-control" id="Evaporation"
+                            placeholder="Eg: 34.2" name="Evaporation" step="any" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="Sunshine"><b>Sunshine</b></label>
+                        <input type="number" class="form-control" id="Sunshine"
+                            placeholder="Eg: 9.7" name="Sunshine" step="any" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="WindGustDir"><b>WindGustDir</b></label>
+                        <select class="form-select" id="WindGustDir" name="WindGustDir" required>
+                            <option value="E">E</option>
+                            <option value="ENE">ESE</option>
+                            <option value="ESE">ESE</option>
+                            <option value="N">N</option>
+                            <option value="NE">NE</option>
+                            <option value="NNE">NNE</option>
+                            <option value="NNW">NNW</option>
+                            <option value="NW">NW</option>
+                            <option value="S">S</option>
+                            <option value="SE">SE</option>
+                            <option value="SSE">SSE</option>
+                            <option value="SSW">SSW</option>
+                            <option value="SW">SW</option>
+                            <option value="W">W</option>
+                            <option value="WNW">WNW</option>
+                            <option value="WSW">WSW</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="WindGustSpeed"><b>WindGustSpeed</b></label>
+                        <input type="number" class="form-control" id="WindGustSpeed"
+                            placeholder="Eg: 67.8" name="WindGustSpeed" step="any" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="WindDir9am"><b>WindDir9am</b></label>
+                        <select class="form-select" id="WindDir9am" name="WindDir9am" required>
+                            <option value="W">W</option>
+                            <option value="NNW">NNW</option>
+                            <option value="SE">SE</option>
+                            <option value="ENE">ENE</option>
+                            <option value="SW">SW</option>
+                            <option value="SSE">SSE</option>
+                            <option value="S">S</option>
+                            <option value="NE">NE</option>
+                            <option value="SSW">SSW</option>
+                            <option value="N">N</option>
+                            <option value="WSW">WSW</option>
+                            <option value="ESE">ESE</option>
+                            <option value="E">E</option>
+                            <option value="NW">NW</option>
+                            <option value="WNW">WSW</option>
+                            <option value="NNE">NNE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="WindDir3pm"><b>WindDir3pm</b></label>
+                        <select class="form-select" id="WindDir3pm" name="WindDir3pm" required>
+                            <option value="W">W</option>
+                            <option value="NNW">NNW</option>
+                            <option value="SE">SE</option>
+                            <option value="ENE">ENE</option>
+                            <option value="SW">SW</option>
+                            <option value="SSE">SSE</option>
+                            <option value="S">S</option>
+                            <option value="NE">NE</option>
+                            <option value="SSW">SSW</option>
+                            <option value="N">N</option>
+                            <option value="WSW">WSW</option>
+                            <option value="ESE">ESE</option>
+                            <option value="E">E</option>
+                            <option value="NW">NW</option>
+                            <option value="WNW">WSW</option>
+                            <option value="NNE">NNE</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="WindSpeed9am"><b>WindSpeed9am</b></label>
+                        <input type="number" class="form-control" id="WindSpeed9am"
+                            placeholder="Eg: 20" name="WindSpeed9am" step="any" required>
+                    </div>
+                    </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="WindSpeed3pm"><b>WindSpeed3pm</b></label>
+                        <input type="number" class="form-control" id="WindSpeed3pm"
+                            placeholder="Eg: 24" name="WindSpeed3pm" step="any" required>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2 mt-2">
+                        <label for="Humidity9am"><b>Humidity9am</b></label>
+                        <input type="number" class="form-control" id="Humidity9am"
+                            placeholder="Eg: 100.5" name="Humidity9am" step="any" required>
+                    </div>
+                </div>
+            <div class="col-sm-2">
+                <div class="mb-2 mt-2">
+                    <label for="Humidity3pm"><b>Humidity3pmt</b></label>
+                    <input type="number" class="form-control" id="Humidity3pm"
+                        placeholder="Eg: 23.6 " name="Humidity3pm" step="any" required>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="mb-2 mt-2">
+                    <label for="Pressure9am"><b>Pressure9am</b></label>
+                    <input type="number" class="form-control" id="Pressure9am"
+                        placeholder="Eg: 1017.6 " name="Pressure9am" step="any" required>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="mb-2 mt-2">
+                    <label for="Pressure3pm"><b>Pressure3pm</b></label>
+                    <input type="number" name="Pressure3pm" 
+                              placeholder="1008.7" class="form-control" id="Pressure3pm" step="any" required>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="mb-2 mt-2">
+                    <label for="Cloud9am"><b>Cloud9am</b></label>
+                    <input type="number" name="Cloud9am" 
+                              placeholder="8.1" class="form-control" id="Cloud9am" step="any" required>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="mb-2 mt-2">
+                    <label for="Cloud3pm"><b>Cloud3pm</b></label>
+                    <input type="number" name="Cloud3pm" 
+                              placeholder="4.1" class="form-control" id="Cloud3pm" step="any" required>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="mb-2 mt-2">
+                    <label for="Temp9am"><b>Temp9am</b></label>
+                    <input type="number" name="Temp9am" 
+                              placeholder="18.1" class="form-control" id="Temp9am" step="any" required>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="mb-2 mt-2">
+                    <label for="Temp3pm"><b>Temp3pm</b></label>
+                    <input type="number" name="Temp3pm" 
+                              placeholder="26.1" class="form-control" id="Temp3pm" step="any" required>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="mb-2 mt-2">
+                    <label for="RainToday"><b>RainToday</b></label>
+                    <select class="form-select" id="RainToday" name="RainToday" step="any" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+            </div>
+            <b><input type="submit" value="AI Whether Prediction" style="height:50px; width:200px; color:rgb(255, 255, 255); background-color: hsl(253, 92%, 19%);"></b>            
+        </form>
+    </div>
+</body>
+
+</html>
